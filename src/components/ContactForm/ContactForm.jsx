@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getContacts } from 'redux/selectors';
-import { addContact } from 'redux/contactsSlice';
+import { addContact } from 'redux/operations';
 import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import { Form, FormLabel, FormInput, SubmitBtn } from './ContactForm.styled';
+// import { addContactWithName } from 'fetchAPI';
 
 const ContactForm = function () {
   const [name, setName] = useState('');
@@ -32,7 +33,7 @@ const ContactForm = function () {
 
   const handleSubmit = e => {
     e.preventDefault();
-    contacts.find(contact => contact.name === name)
+    contacts.items.find(contact => contact.name === name)
       ? alert(`${name} is already in contacts`)
       : dispatch(addContact(name, number));
     setName('');
