@@ -13,8 +13,8 @@ const ContactList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(contacts.items);
-  });
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   const normalizedFilter = filter.toLowerCase();
   const visibleContacts = contacts.items.filter(contact =>
@@ -22,8 +22,8 @@ const ContactList = () => {
   );
   return (
     <Contacts>
-      {visibleContacts.map(({ id, name, number }) => {
-        return <ContactItem key={id} id={id} name={name} number={number} />;
+      {visibleContacts.map(({ id, name, phone }) => {
+        return <ContactItem key={id} id={id} name={name} number={phone} />;
       })}
     </Contacts>
   );
@@ -36,7 +36,7 @@ ContactList.propTypes = {
     PropTypes.exact({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
+      phone: PropTypes.string.isRequired,
     })
   ),
 };

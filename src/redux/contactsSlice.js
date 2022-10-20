@@ -10,28 +10,43 @@ const contactsSlice = createSlice({
   },
   extraReducers: {
     [fetchContacts.fulfilled]: (state, { payload }) => {
-      return { ...state, items: [...payload] };
+      return {
+        ...state,
+        items: [...payload],
+        isLoading: false,
+        error: null,
+      };
     },
     [fetchContacts.pending]: state => {
       return { ...state, isLoading: true };
     },
     [fetchContacts.rejected]: (state, { payload }) => {
-      return { ...state, error: payload };
+      return { ...state, error: payload, isLoading: false };
     },
 
     [addContact.fulfilled]: (state, { payload }) => {
       console.log(payload);
-      return { ...state, items: [...state.items, ...payload] };
+      return {
+        ...state,
+        items: [...state.items, payload],
+        isLoading: false,
+        error: null,
+      };
     },
     [addContact.pending]: state => {
       return { ...state, isLoading: true };
     },
     [addContact.rejected]: (state, { payload }) => {
-      return { ...state, error: payload };
+      return { ...state, error: payload, isLoading: false };
     },
 
     [deleteContact.fulfilled]: (state, { payload }) => {
-      return { ...state, items: [...payload] };
+      console.log(payload);
+      return {
+        ...state,
+        items: [...state.items.filter(({ id }) => id !== payload.id)],
+        isLoading: false,
+      };
     },
     [deleteContact.pending]: state => {
       return { ...state, isLoading: true };
@@ -39,32 +54,9 @@ const contactsSlice = createSlice({
     [deleteContact.rejected]: (state, { payload }) => {
       return { ...state, error: payload };
     },
-
-    // [addContact.fulfilled]: {
-    //   reducer(state, { payload }) {
-    //     return [...state, payload];
-    //   },
-    //   prepare(name, number) {
-    //     return {
-    //       payload: {
-    //         id: nanoid(),
-    //         name: name,
-    //         number: number,
-    //       },
-    //     };
-    //   },
-
-    // reducers: {
-    //   addContact:
-    //   },
-
-    //   deleteContact(state, action) {
-    //     return [...state.filter(contact => contact.id !== action.payload)];
-    //   },
   },
 });
 
 console.log(contactsSlice.reducer);
 
-// export const { addContact, deleteContact } = contactsSlice.actions;
 export const contactsReducer = contactsSlice.reducer;

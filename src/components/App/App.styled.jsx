@@ -12,3 +12,7 @@ export const PageTitle = styled.h1`
 export const ContactsTitle = styled.h2`
   margin-bottom: 20px;
 `;
+
+export const LoaderText = styled.h2`
+  margin-bottom: 20px;
+`;
